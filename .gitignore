@@ -1,0 +1,4 @@
+﻿backend/.vs/*
+backend/.vs/
+backend/.env
+backend/obj/
