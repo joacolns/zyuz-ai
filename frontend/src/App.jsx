@@ -1,35 +1,57 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [input, setInput] = useState('')
+  const [response, setResponse] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleSend = async () => {
+    if(!input.trim()) return
+    setLoading(true)
+
+    try {
+      const response = await fetch('/api/chat' , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: input }),
+      })
+
+      const data = await response.json()
+      const reply = data.choices?.[0]?.message?.content || 'Sin respuesta'
+      setResponse(reply)
+    }catch(err){
+      console.error('Error al enviar el mensaje:', err)
+      setResponse('Error al conectar con el backend', err)
+    }finally {
+      setLoading(false)
+      setInput('')
+    }
+
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="container">
+      <h1>ZYUZ</h1>
+      <h2>ズズ</h2>
+      <textarea
+        rows={4}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder='Pregunta lo que quieras'
+      />
+      <button onClick={handleSend} disabled={loading}>
+        {loading ? 'Enviando...' : 'Enviar'}
+      </button>
+      {response && (
+        <div classname="response">
+          <strong>Respuesta:</strong>
+          <p>{response}</p>
+        </div>  
+      )}
+    </div>
   )
 }
-
 export default App
