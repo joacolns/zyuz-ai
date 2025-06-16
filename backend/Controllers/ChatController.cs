@@ -21,9 +21,9 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ChatRequest request)
         {
-            if(request == null || string.IsNullOrWhiteSpace(request.Message))
+            if (request == null || request.messages == null || !request.messages.Any())
             {
-                return BadRequest("El mensaje no puede estar vacio.");
+                return BadRequest("No hay mensajes para procesar.");
             }
 
             var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
@@ -36,22 +36,19 @@ namespace backend.Controllers
             var model = _configuration["OpenAI:Model"];
 
             var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey); //Settings de los headers         
-            
-            var payload = new //Cuerpo de mensaje
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+            var payload = new
             {
                 model = model,
-                messages = new[]
-                {
-                    new { role = "user", content = request.Message }
-                }
+                messages = request.messages,
+                temperature = 0.7
             };
 
-            var jsonPayload = JsonSerializer.Serialize(payload); //Conversion del payload a json
-            var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json"); //Preparar el contenido HTTP
+            var jsonPayload = JsonSerializer.Serialize(payload);
+            var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync(endpoint, httpContent); //Envia la solicitud HTTP
-
+            var response = await client.PostAsync(endpoint, httpContent);
             var responseJson = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
@@ -62,10 +59,19 @@ namespace backend.Controllers
             return Content(responseJson, "application/json");
         }
 
+
+        public class ChatMessage
+        {
+            public string role { get; set; } = "";
+            public string content { get; set; } = "";
+        }
+
         public class ChatRequest
         {
-            public string Message { get; set; } = string.Empty;
+            public List<ChatMessage> messages { get; set; } = new();
         }
+
+
 
     }
 }
