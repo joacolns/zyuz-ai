@@ -1,11 +1,11 @@
 ﻿#Backend
+.idea
 
 backend/.vs/*
 backend/.vs/
 backend/.env
 backend/obj/
 backend/bin/
-backend/bin/*
 
 #Frontend
 
