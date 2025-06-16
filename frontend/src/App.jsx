@@ -1,71 +1,51 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
-import { FiSend } from 'react-icons/fi'
 
 function App() {
   const [input, setInput] = useState('')
-  const [messages, setMessages] = useState([])
-  const chatEndRef = useRef(null)
+  const [response, setResponse] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSend = async () => {
     if (!input.trim()) return
-
-    const userMessage = { role: 'user', content: input }
-    setMessages((prev) => [...prev, userMessage])
-    setInput('')
+    setLoading(true)
 
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ message: input }),
       })
 
       const data = await res.json()
-      const botMessage = {
-        role: 'assistant',
-        content: data.response || 'Sin respuesta del servidor'
-      }
-
-      setMessages((prev) => [...prev, botMessage])
+      const reply = data.choices?.[0]?.message?.content || 'Sin respuesta'
+      setResponse(reply)
     } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: 'Error de red o del servidor.' }
-      ])
+      console.error(err)
+      setResponse('Error al conectar con el backend.')
+    } finally {
+      setLoading(false)
     }
   }
-
-  // Scroll automático hacia abajo cuando cambia el chat
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
-
+  
   return (
-    <div className="chat-wrapper">
-      <div className="chat-window">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`message ${msg.role === 'user' ? 'user' : 'bot'}`}
-          >
-            {msg.content}
-          </div>
-        ))}
-        <div ref={chatEndRef} />
-      </div>
-
-      <div className="input-area">
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Escribí tu mensaje..."
-          rows={1}
-        />
-        <button onClick={handleSend}>
-          <FiSend size={20} />
-        </button>
-      </div>
+    <div className="container">
+      <h1>¿Como puedo ayudarte hoy?</h1>
+      <textarea
+        rows={4}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Pregunta lo que quieras"
+      />
+      <button onClick={handleSend} disabled={loading}>
+        {loading ? 'Cargando...' : 'Enviar'}
+      </button>
+      {response && (
+        <div className="response">
+          <strong>Respuesta:</strong>
+          <p>{response}</p>
+        </div>
+      )}
     </div>
   )
 }
