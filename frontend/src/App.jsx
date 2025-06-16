@@ -10,6 +10,7 @@ function App() {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
+  const [typingMessageId, setTypingMessageId] = useState(null)
 
   const placeholders = [
     "Pregunta lo que quieras",
@@ -41,6 +42,37 @@ function App() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString("es-ES", {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  }
+
+  const typeMessage = (messageId, fullText, speed = 30) => {
+    return new Promise((resolve) => {
+      let currentIndex = 0
+      setTypingMessageId(messageId)
+      
+      const typeInterval = setInterval(() => {
+        if (currentIndex <= fullText.length) {
+          setMessages(prev => 
+            prev.map(msg => 
+              msg.id === messageId 
+                ? { ...msg, text: fullText.substring(0, currentIndex) }
+                : msg
+            )
+          )
+          currentIndex++
+        } else {
+          clearInterval(typeInterval)
+          setTypingMessageId(null)
+          resolve()
+        }
+      }, speed)
+    })
+  }
 
   const handleSend = async () => {
     if (!input.trim()) return
@@ -74,25 +106,34 @@ function App() {
       const data = await res.json()
       const reply = data.choices?.[0]?.message?.content || "Sin respuesta"
 
+      const aiMessageId = Date.now() + 1
       const aiMessage = {
-        id: Date.now() + 1,
-        text: reply,
+        id: aiMessageId,
+        text: "", // Empezamos con texto vacío
         sender: "ai",
         timestamp: new Date(),
       }
 
+      // Agregar el mensaje vacío primero
       setMessages((prev) => [...prev, aiMessage])
+      setLoading(false)
+      
+      // Luego iniciar el efecto de tipeo
+      await typeMessage(aiMessageId, reply)
+      
     } catch (err) {
       console.error(err)
+      const errorMessageId = Date.now() + 1
       const errorMessage = {
-        id: Date.now() + 1,
-        text: "Error al conectar con el backend.",
+        id: errorMessageId,
+        text: "",
         sender: "ai",
         timestamp: new Date(),
       }
+      
       setMessages((prev) => [...prev, errorMessage])
-    } finally {
       setLoading(false)
+      await typeMessage(errorMessageId, "Error al conectar con el backend.")
     }
   }
 
@@ -107,17 +148,10 @@ function App() {
     setMessages([])
   }
 
-  const formatTime = (date) => {
-    return date.toLocaleTimeString("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-  }
-
   return (
     <div className="container">
       <div className="header">
-        <h1>¿En qué puedo ayudarte?</h1>
+        <h1>¿En qué puedo ayudarte hoy?</h1>
         {messages.length > 0 && (
           <button onClick={clearHistory} className="clear-button" title="Limpiar historial">
             <HiTrash size={16} />
@@ -131,9 +165,12 @@ function App() {
           {messages.map((message) => (
             <div key={message.id} className={`message ${message.sender}`}>
               <div className="message-content">
-                {message.sender === "ai" && <div className="ai-avatar">AI</div>}
+                {message.sender === "ai" && <div className="ai-avatar">Z</div>}
                 <div className="message-bubble">
-                  <p className="message-text">{message.text}</p>
+                  <p className="message-text">
+                    {message.text}
+                    {typingMessageId === message.id && <span className="typing-cursor">|</span>}
+                  </p>
                   <span className="message-time">{formatTime(message.timestamp)}</span>
                 </div>
               </div>
@@ -142,7 +179,7 @@ function App() {
           {loading && (
             <div className="message ai">
               <div className="message-content">
-                <div className="ai-avatar">AI</div>
+                <div className="ai-avatar">Z</div>
                 <div className="message-bubble loading-message">
                   <div className="typing-indicator">
                     <span></span>
@@ -186,7 +223,7 @@ function App() {
       )}
 
       <a
-        href="https://github.com"
+        href="https://github.com/joacolns/zyuz-ai"
         target="_blank"
         rel="noopener noreferrer"
         className="github-button"
