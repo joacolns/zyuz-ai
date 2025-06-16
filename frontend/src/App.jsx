@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { FaGithub } from "react-icons/fa"
 import "./App.css"
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length)
-    }, 1500) // Cambia cada 3 segundos
+    }, 3000) // Cambia cada 3 segundos
 
     return () => clearInterval(interval)
   }, [])
@@ -68,7 +69,7 @@ function App() {
   return (
     <div className="container">
       <div className="header">
-        <h1>¿En qué puedo ayudarte hoy?</h1>
+        <h1>¿En qué puedo ayudarte?</h1>
       </div>
 
       <div className="input-container">
@@ -101,6 +102,17 @@ function App() {
       {!response && (
         <div className="instructions">Escribe tu pregunta y presiona Enter o haz clic en el botón para enviar</div>
       )}
+
+      {/* Botón de GitHub con react-icons */}
+      <a
+        href="https://github.com/joacolns/zyuz-ai"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="github-button"
+        title="Ver en GitHub"
+      >
+        <FaGithub size={20} />
+      </a>
     </div>
   )
 }
