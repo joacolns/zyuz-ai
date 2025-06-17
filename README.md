@@ -60,6 +60,24 @@ Este proyecto es una aplicación **full stack** que combina un **backend** desar
     }
     ```
   - Para obtener una key JWT, puedes usar herramientas como [jwt.io](https://jwt.io/) o OpenSSL, para generarla.
+- Ejecutar el siguiente archivo en mySQL Workbench para crear la base de datos (en ./backend):
+  ```bash
+  crear_base_datos.sql
+  ```
+  o de forma manual
+  ```bash
+  CREATE DATABASE zyuz_database_local;
+  USE zyuz_database_local;
+
+  CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+  ```
 - Para el **frontend**, se pueden configurar variables en el archivo de entorno por defecto (`.env`) o en uno adicional (`.env.development`) para aspectos como la URL del backend si fuera necesario.
 
 ## Ejecución
