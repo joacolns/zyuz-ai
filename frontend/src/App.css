@@ -11,6 +11,20 @@
   position: relative;
 }
 
+.login-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #08ca35;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
 .header h1 {
   font-size: 1.5rem;
   font-weight: 500;
@@ -327,7 +341,16 @@ textarea::placeholder {
     font-size: 1.25rem;
   }
 
+
+
   .github-button {
+    bottom: 1rem;
+    left: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .LoginButton{
     bottom: 1rem;
     left: 1rem;
     width: 2.5rem;
