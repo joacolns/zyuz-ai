@@ -64,7 +64,7 @@ Este proyecto es una aplicación **full stack** que combina un **backend** desar
   ```bash
   crear_base_datos.sql
   ```
-  o de forma manual
+  o de forma manual:
   ```bash
   CREATE DATABASE zyuz_database_local;
   USE zyuz_database_local;
@@ -78,6 +78,7 @@ Este proyecto es una aplicación **full stack** que combina un **backend** desar
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
   ```
+   - Luego, dar de alta el servicio Apache y MySQL en Laragon, XAMPP, WAMP, o el gestor de base de datos que estés utilizando.
 - Para el **frontend**, se pueden configurar variables en el archivo de entorno por defecto (`.env`) o en uno adicional (`.env.development`) para aspectos como la URL del backend si fuera necesario.
 
 ## Ejecución
