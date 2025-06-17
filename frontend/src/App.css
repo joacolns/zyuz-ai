@@ -25,6 +25,39 @@
   transition: all 0.2s ease;
 }
 
+.user-input{
+  position: relative;
+  width: 20rem;
+  height: 2rem;
+  background: white;
+  border: 1px solid #e1e5e9;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.close-button{
+  background: #08ca35;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-button {
+  background: #08ca35;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
 .header h1 {
   font-size: 1.5rem;
   font-weight: 500;
@@ -340,8 +373,6 @@ textarea::placeholder {
   .header h1 {
     font-size: 1.25rem;
   }
-
-
 
   .github-button {
     bottom: 1rem;

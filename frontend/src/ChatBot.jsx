@@ -214,7 +214,7 @@ function ChatBot({ setShowLoginScreen }) {
               disabled={loading}
           />
 
-                    <div className="model-label">GPT-o4 mini</div>
+                    <div className="model-label">GPT-4o mini</div>
 
                     <button
                         className="send-button"
