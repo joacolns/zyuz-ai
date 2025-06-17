@@ -359,4 +359,61 @@ textarea::placeholder {
         width: 16px;
         height: 16px;
     }
+
+    .message-bubble pre {
+        background: #1a1a1a !important;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 0.5rem 0;
+    }
+
+    .message-bubble code {
+        font-family: 'Fira Code', 'Consolas', monospace;
+        font-size: 0.875rem;
+    }
+
+    .message.user .message-bubble pre {
+        background: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .message.user .message-bubble code {
+        color: #e0e0e0;
+    }
+
+    /* Estilos para matemáticas */
+    .math-inline, .math-block {
+        display: inline-block;
+        margin: 0 2px;
+        padding: 2px 5px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+    }
+
+    .math-block {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.03);
+        padding: 10px;
+    }
+
+    /* Asegúrate de que KaTeX se renderice correctamente */
+    .katex {
+        font-size: 1.1em !important;
+        padding: 0 3px;
+    }
+
+    .message.user .katex {
+        color: #e0e0e0;
+    }
+
+    /* Contenedor de KaTeX */
+    .katex-display {
+        margin: 0.5em 0 !important;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 8px;
+        overflow-x: auto;
+    }
 }

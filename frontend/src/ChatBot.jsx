@@ -1,31 +1,22 @@
-import { useState, useEffect, useRef } from "react"
-import { HiTrash } from "react-icons/hi"
+import { useState, useEffect, useRef } from "react";
+import { HiTrash } from "react-icons/hi";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import placeholders from "./ChatPlaceholders.js";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { FaGithub } from "react-icons/fa";
 import "./ChatBot.css";
 
-function ChatBot({ setShowLoginScreen }) {
+function ChatBot({ setShowLoginScreen, user, onLogout }) {
     const [input, setInput] = useState("")
     const [messages, setMessages] = useState([])
     const [loading, setLoading] = useState(false)
     const messagesEndRef = useRef(null)
     const [typingMessageId, setTypingMessageId] = useState(null)
 
-    const placeholders = [
-        "Pregunta lo que quieras",
-        "Ayúdame a crear una base de datos",
-        "Ayúdame con este código",
-        "Explícame cómo funciona React",
-        "Crea una función en JavaScript",
-        "Ayúdame a diseñar una API",
-        "¿Cómo optimizo mi sitio web?",
-        "Explícame los hooks de React",
-        "Ayúdame con CSS Grid",
-        "¿Cómo conectar a una base de datos?",
-        "Crea un componente reutilizable",
-        "Ayúdame a debuggear este error",
-        "¿Cómo implemento autenticación?",
-        "Explícame async/await",
-        "Ayúdame con responsive design",
-    ]
     const [currentPlaceholder, setCurrentPlaceholder] = useState(0)
 
     useEffect(() => {
@@ -157,12 +148,23 @@ function ChatBot({ setShowLoginScreen }) {
             </div>
 
             <div className="login-container">
-                <button
-                    className="login-button"
-                    onClick={() => setShowLoginScreen(true)}
-                >
-                    Iniciar Sesión
-                </button>
+                {user ? (
+                    <>
+                        <span style={{ marginRight: "1rem", fontWeight: "bold" }}>
+                            {user.username}
+                        </span>
+                        <button className="login-button" onClick={onLogout}>
+                            Cerrar Sesión
+                        </button>
+                    </>
+                ) : (
+                    <button
+                        className="login-button"
+                        onClick={() => setShowLoginScreen(true)}
+                    >
+                        Iniciar Sesión
+                    </button>
+                )}
             </div>
 
             {messages.length > 0 && (
@@ -174,15 +176,43 @@ function ChatBot({ setShowLoginScreen }) {
                                     <div className="ai-avatar">Z</div>
                                 )}
                                 <div className="message-bubble">
-                                    <p className="message-text">
-                                        {message.text}
-                                        {typingMessageId === message.id && (
-                                            <span className="typing-cursor">|</span>
+                                    <div className="message-text">
+                                        {typingMessageId === message.id ? (
+                                            <>
+                                                {message.text}
+                                                <span className="typing-cursor">|</span>
+                                            </>
+                                        ) : (
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkGfm, remarkMath]}
+                                                rehypePlugins={[rehypeKatex]}
+                                                components={{
+                                                    code({ inline, className, children, ...props }) {
+                                                        const match = /language-(\w+)/.exec(className || '');
+                                                        return !inline && match ? (
+                                                            <SyntaxHighlighter
+                                                                style={atomDark}
+                                                                language={match[1]}
+                                                                PreTag="div"
+                                                                {...props}
+                                                            >
+                                                                {String(children).replace(/\n$/, '')}
+                                                            </SyntaxHighlighter>
+                                                        ) : (
+                                                            <code className={className} {...props}>
+                                                                {children}
+                                                            </code>
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                {message.text}
+                                            </ReactMarkdown>
                                         )}
-                                    </p>
+                                    </div>
                                     <span className="message-time">
-                    {formatTime(message.timestamp)}
-                  </span>
+                                        {formatTime(message.timestamp)}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -207,13 +237,13 @@ function ChatBot({ setShowLoginScreen }) {
 
             <div className="input-container">
                 <div className="input-wrapper">
-          <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={placeholders[currentPlaceholder]}
-              disabled={loading}
-          />
+                    <textarea
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        placeholder={placeholders[currentPlaceholder]}
+                        disabled={loading}
+                    />
 
                     <div className="model-label">GPT-4o mini</div>
 
@@ -245,6 +275,7 @@ function ChatBot({ setShowLoginScreen }) {
                 className="github-button"
                 title="Ver en GitHub"
             >
+                <FaGithub size={20} color="#08ca35" />
             </a>
         </>
     )
