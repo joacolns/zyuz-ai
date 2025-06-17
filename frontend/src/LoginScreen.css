@@ -1,0 +1,65 @@
+.login-screen {
+    text-align: center;
+}
+
+.user-input {
+    position: relative;
+    width: 20rem;
+    height: 2rem;
+    background: white;
+    border: 1px solid #e1e5e9;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    display: block;
+    margin: 1rem auto;
+}
+
+.error-message {
+    background: #ffebee;
+    color: #b71c1c;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    text-align: left;
+    white-space: pre-line;
+}
+
+.close-button {
+    background: #08ca35;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+    display: block;
+    width: 10%;
+}
+
+.auth-button {
+    background: #08ca35;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .user-input {
+        width: 90%;
+    }
+
+    .LoginButton {
+        bottom: 1rem;
+        left: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
