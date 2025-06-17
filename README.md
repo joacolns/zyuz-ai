@@ -17,6 +17,10 @@ Este proyecto es una aplicación **full stack** que combina un **backend** desar
 ## Instrucciones de instalación
 
 1. **Clonar el repositorio** o descargar la carpeta del proyecto.
+      ```
+    git clone https://github.com/joacolns/zyuz-ai.git
+      ```
+
 2. **Instalar dependencias**:
     - Para el **backend**:  
       Ingresa a la carpeta `backend` y ejecuta:
