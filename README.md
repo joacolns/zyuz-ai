@@ -2,6 +2,13 @@
 
 Este proyecto es una aplicación **full stack** que combina un **backend** desarrollado en .NET con C# y un **frontend** desarrollado con React. A continuación, se describen los pasos básicos para ejecutarlo de forma local, así como información general sobre la estructura del proyecto.
 
+## Capturas
+
+![Captura 1](frontend/public/cap1.png)
+![Captura 1](frontend/public/cap2.png)
+![Captura 1](frontend/public/cap3.png)
+![Captura 1](frontend/public/cap4.png)
+
 ## Requisitos previos
 
 - **.NET SDK** (versión recomendada: 8.0 o superior)
@@ -38,7 +45,7 @@ Este proyecto es una aplicación **full stack** que combina un **backend** desar
 
 ## Configuración de variables de entorno
 
-- Para el **backend**, se recomienda configurar un archivo de entorno (por ejemplo, `.env`) con la API de OpenAI (OPEN_AI_KEY) y una Key JWT (JWT_KEY).
+- Para el **backend**, se recomienda configurar un archivo de entorno (por ejemplo, `.env`) con la API de OpenAI (OPEN_AI_KEY), o cualquier API compatible con la estructura de OpenAI, y una Key JWT (JWT_KEY).
 - Para la base de datos, se puede configurar la cadena de conexión en el archivo `appsettings.json` o en un archivo `.env` si se prefiere.
   - Ejemplo de configuración en `.env`:
     ```
