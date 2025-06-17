@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { HiTrash } from "react-icons/hi"
+import "./ChatBot.css";
 
 function ChatBot({ setShowLoginScreen }) {
     const [input, setInput] = useState("")
