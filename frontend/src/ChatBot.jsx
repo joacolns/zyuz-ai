@@ -9,6 +9,11 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { FaGithub } from "react-icons/fa";
 import "./ChatBot.css";
+import axios from "axios";
+
+axios.defaults.baseURL = window.location.hostname === "localhost"
+    ? "http://localhost:5169"
+    : "http://host.docker.internal:5169";
 
 function ChatBot({ setShowLoginScreen, user, onLogout }) {
     const [input, setInput] = useState("")

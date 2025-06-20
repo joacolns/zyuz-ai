@@ -5,20 +5,18 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Carga las variables de entorno
 DotNetEnv.Env.Load();
 
-// Servicios de la app
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
 
-// Configuración de Swagger con JWT
+// Configuracion de Swagger con JWT
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ZYUZ API", Version = "v1" });
 
-    // Configuración para JWT en Swagger
+    // Configuracion para JWT en Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
@@ -44,7 +42,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Configuración de CORS
+// Configuracion de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -55,7 +53,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configuración de JWT
+// Configuracion de JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -79,7 +77,7 @@ var app = builder.Build();
 // Middleware pipeline
 app.UseCors("AllowAll");
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>

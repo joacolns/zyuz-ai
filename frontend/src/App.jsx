@@ -4,7 +4,9 @@ import LoginScreen from "./LoginScreen";
 import "./App.css";
 import axios from "axios";
 
-axios.defaults.baseURL = 'http://localhost:5169';
+axios.defaults.baseURL = window.location.hostname === "localhost"
+    ? "http://localhost:5169"
+    : "http://host.docker.internal:5169";
 
 function App() {
     const [showLoginScreen, setShowLoginScreen] = useState(false);
