@@ -113,7 +113,9 @@ bash run.bat
 
 De esta forma, se lanza el servidor .NET con el frontend de React simultáneamente.
 
-## Ejecución del backend en Docker
+## Ejecución en Docker
+
+# Backend
 
 Para ejecutar el backend en Docker, asegúrate de tener Docker instalado y configurado. Luego, sigue estos pasos:
 
@@ -129,9 +131,25 @@ dotnet dev-certs https --trust
 Compila el proyecto de .NET y crea la imagen de Docker:
 
 ```
+cd ./backend/
 docker build -t zyuz-backend .
 docker run -p 5169:5169 -p 7106:7106 -v $env:USERPROFILE\.aspnet\https:/https/ --env-file ./.env zyuz-backend
 ```
+
+# Frontend
+
+```
+cd ./frontend/
+docker build -t zyuz-frontend .
+docker run -d -p 8080:80 --name mi-zyuz-frontend zyuz-frontend
+```
+
+# Ejecución conjunta (compose)
+
+```
+docker-compose up --build
+```
+
 
 ## Características principales
 
