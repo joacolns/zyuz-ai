@@ -2,6 +2,10 @@ import { useState } from "react";
 import axios from "axios";
 import "./LoginScreen.css";
 
+axios.defaults.baseURL = window.location.hostname === "localhost"
+    ? "http://localhost:5169"
+    : "http://host.docker.internal:5169";
+
 function LoginScreen({ setShowLoginScreen, setUser }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
