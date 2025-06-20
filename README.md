@@ -41,25 +41,25 @@ Este proyecto es una aplicación **full stack** que combina un **backend** desar
       ```
 
 
-   Si estás en Windows, podes usar directamente el script `install-dependencies.bat` para realizar este proceso automáticamente.
+Si estás en Windows, podes usar directamente el script `install-dependencies.bat` para realizar este proceso automáticamente.
 
 ## Configuración de variables de entorno
 
 - Para el **backend**, se recomienda configurar un archivo de entorno (por ejemplo, `.env`) con la API de OpenAI (OPEN_AI_KEY), o cualquier API compatible con la estructura de OpenAI, y una Key JWT (JWT_KEY).
 - Para la base de datos, se puede configurar la cadena de conexión en el archivo `appsettings.json` o en un archivo `.env` si se prefiere.
-  - Ejemplo de configuración en `.env`:
-    ```
-    OPEN_AI_KEY=tu_clave_de_openai
-    JWT_KEY=tu_clave_jwt
-    ```
+    - Ejemplo de configuración en `.env`:
+      ```
+      OPEN_AI_KEY=tu_clave_de_openai
+      JWT_KEY=tu_clave_jwt
+      ```
 
-  - La cadena de conexión a la base de datos puede configurarse directamente en `appsettings.json` o también mediante una variable de entorno:
-    ```json
-    "ConnectionStrings": {
-      "DefaultConnection": "Server=localhost;Database=zyuzai;User Id=sa;Password=tu_contraseña;"
-    }
-    ```
-  - Para obtener una key JWT, puedes usar herramientas como [jwt.io](https://jwt.io/) o OpenSSL, para generarla.
+    - La cadena de conexión a la base de datos puede configurarse directamente en `appsettings.json` o también mediante una variable de entorno:
+      ```json
+      "ConnectionStrings": {
+        "DefaultConnection": "Server=localhost;Database=zyuzai;User Id=sa;Password=tu_contraseña;"
+      }
+      ```
+    - Para obtener una key JWT, puedes usar herramientas como [jwt.io](https://jwt.io/) o OpenSSL, para generarla.
 - Ejecutar el siguiente archivo en mySQL Workbench para crear la base de datos (en ./backend):
   ```bash
   crear_base_datos.sql
@@ -78,7 +78,7 @@ Este proyecto es una aplicación **full stack** que combina un **backend** desar
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
   ```
-   - Luego, dar de alta el servicio Apache y MySQL en Laragon, XAMPP, WAMP, o el gestor de base de datos que estés utilizando.
+    - Luego, dar de alta el servicio Apache y MySQL en Laragon, XAMPP, WAMP, o el gestor de base de datos que estés utilizando.
 - Para el **frontend**, se pueden configurar variables en el archivo de entorno por defecto (`.env`) o en uno adicional (`.env.development`) para aspectos como la URL del backend si fuera necesario.
 
 ## Ejecución
@@ -135,8 +135,8 @@ docker run -p 5169:5169 -p 7106:7106 -v $env:USERPROFILE\.aspnet\https:/https/ -
 
 ## Características principales
 
-- **Backend con .NET**: Se encarga de la lógica y la gestión de datos.  
-- **Frontend con React**: Interfaz moderna y fácil de ampliar, creada con Vital Framework.  
+- **Backend con .NET**: Se encarga de la lógica y la gestión de datos.
+- **Frontend con React**: Interfaz moderna y fácil de ampliar, creada con Vital Framework.
 - **Scripts automatizados**: Facilitan la instalación de dependencias y la ejecución conjunta de la aplicación.
 
 ## Personalización
@@ -147,8 +147,8 @@ docker run -p 5169:5169 -p 7106:7106 -v $env:USERPROFILE\.aspnet\https:/https/ -
 
 ## Contribuciones
 
-1. Haz un **fork** del repositorio.  
-2. Crea una rama para tu feature o corrección de bug.  
+1. Haz un **fork** del repositorio.
+2. Crea una rama para tu feature o corrección de bug.
 3. Commitea tus cambios y envía un pull request.
 
 ## Licencia
